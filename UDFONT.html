@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operating Bot Report Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white; /* Set text color to white */
+  }
+  .header {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px; /* Set gap between buttons */
+  }
+  .header a, .header button {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: #444;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .header a:hover, .header button:hover {
+    background-color: #555;
+  }
+  .form-container {
+    max-width: 400px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+    color: #333; /* Set text color inside the form to black */
+  }
+  .form-container h2 {
+    text-align: center;
+  }
+  .form-container input[type="text"],
+  .form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .form-container button:hover {
+    background-color: #555;
+  }
+
+  .greeting-container {
+    text-align: center;
+    margin-bottom: 20px; /* Add margin */
+  }
+
+  .greeting {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Add margin */
+  }
+
+  .sub-greeting {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  /* Class to hide elements */
+  .hidden {
+    display: none !important;
+  }
+
+  /* FAQ styles */
+  .faq-container {
+    max-width: 800px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+    color: #333; /* Set text color to black */
+    margin-top: 40px; /* Increase margin at the top */
+  }
+  .faq-columns {
+    display: flex;
+    justify-content: space-between;
+  }
+  .faq-column {
+    flex: 1;
+    margin-right: 20px;
+  }
+  .faq-column ul {
+    padding: 0;
+    list-style-type: none;
+  }
+  .faq-column h4 {
+    margin-top: 0;
+  }
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Add shadow at the bottom */
+  }
+
+  .footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <button id="report-link">Report Abuse</button>
+  <button id="question-link">Ask a Question</button>
+  <button id="faq-link">FAQ</button>
+  <a href="https://yuuseibe.github.io/endula/eula.html#">Terms of Use</a>
+  <a href="https://discord.com/oauth2/authorize?client_id=1247869959569145946&permissions=1759218604441591&response_type=code&redirect_uri=https%3A%2F%2Fyuuseibe.github.io%2Fendula%2Feula.html&integration_type=0&scope=bot+email">Add Bot</a>
+  <a href="#home" id="home-link">Home</a>
+</header>
+
+<div class="greeting-container">
+  <div class="greeting">Hello</div>
+  <div class="sub-greeting">Operating Bot Committee</div>
+  <div class="sub-greeting">How can we assist you?</div>
+  <div class="sub-greeting">Press 1 to hide the buttons. Press again to show them.</div>
+</div>
+
+<div class="form-container" id="report-form">
+  <h2>Report Abuse</h2>
+  <form id="report-submit-form">
+    <input type="text" placeholder="Your Name" id="report-name" required>
+    <textarea placeholder="Details of the abuse" id="report-details" rows="5" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<div class="form-container" id="question-form">
+  <h2>Ask a Question</h2>
+  <div style="color: red;">Warning! Please check the FAQ first.</div>
+  <form id="question-submit-form">
+    <input type="text" placeholder="Your Name" id="question-name" required>
+    <textarea placeholder="Your Question" id="question-details" rows="5" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<div class="faq-container" id="faq-content">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-columns">
+    <div class="faq-column">
+      <ul>
+        <li>
+          <h4>FAQ List</h4>
+        </li>
+        <li>
+          <h4>Q: Is there a fee to use this site?</h4>
+          <p>A: No, using this site is free.</p>
+        </li>
+        <li>
+          <h4>Q: Can you tell me more about the bot's features?</h4>
+          <p>A: The bot provides reporting and question functions, sending appropriate information to the administrators.</p>
+        </li>
+        <li>
+          <h4>Q: How are the reports handled?</h4>
+          <p>A: The reports are reviewed by the administrators and appropriate actions are taken.</p>
+        </li>
+        <li>
+          <h4>Q: Can I receive a response to my question?</h4>
+          <p>A: Yes, responses to your questions will be sent through Discord.</p>
+        </li>
+        <li>
+          <h4>Q: What should I do if I want to provide additional information after submitting a report?</h4>
+          <p>A: Please resend the relevant information through the report or question form. The initial submission will be invalidated.</p>
+        </li>
+        <li>
+          <h4>Q: Where can I check the terms of use?</h4>
+          <p>A: The terms of use can be checked <a href="https://yuuseibe.github.io/endula/eula.html#">here</a>.</p>
+        </li>
+        <li>
+          <h4>Q: How can I add the bot?</h4>
+          <p>A: The bot can be added via the "Add Bot" link in the header.</p>
+        </li>
+        <h5>Operating Bot Committee</h5>
+      </ul>
+    </div>
+    <div class="faq-column">
+      <ul>
+        <li>
+          <h4>Q: How is the data on this site protected?</h4>
+          <p>A: We take appropriate measures to ensure the protection and privacy of data.</p>
+        </li>
+        <li>
+          <h4>Q: I want to report a problem or bug on the site.</h4>
+          <p>A: Please inform us of any problems or bugs through the question form. We will address them as soon as possible.</p>
+        </li>
+        <li>
+          <h4>Q: Will there be a delay in receiving a response to my report or question?</h4>
+          <p>A: Typically, responses or actions will be taken within 24 hours, but depending on the situation, it may take longer.</p>
+        </li>
+        <li>
+          <h4>Q: Is there a way to withdraw a submitted report or question?</h4>
+          <p>A: Yes, you can withdraw by notifying us through the question form.</p>
+        </li>
+        <li>
+          <h4>Q: Are there any limitations on what I can report?</h4>
+          <p>A: Reports should be relevant to the bot's operation. Irrelevant or inappropriate content may be disregarded.</p>
+        </li>
+        <li>
+          <h4>Q: How do I contact support?</h4>
+          <p>A: Support can be contacted through the question form or via our official Discord server.</p>
+        </li>
+        <li>
+          <h4>Q: Is the bot available in multiple languages?</h4>
+          <p>A: Currently, the bot primarily supports English, but we are working on adding more languages in the future.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <a href="https://discord.com/oauth2/authorize?client_id=1247869959569145946&permissions=1759218604441591&response_type=code&redirect_uri=https%3A%2F%2Fyuuseibe.github.io%2Fendula%2Feula.html&integration_type=0&scope=bot+email">Add Bot</a>
+  <a href="https://yuuseibe.github.io/endula/eula.html#">Terms of Use</a>
+  <a href="#home" id="footer-home-link">Home</a>
+</footer>
+
+<script>
+    // Function to send a message to Discord
+    function sendDiscordMessage(message) {
+      const webhookURL = 'https://discord.com/api/webhooks/1258029058877554719/45-40DQrtl29U9YND-iytIbmuWUyme_lXpdBUrVOh5aq0BA28bEKhvzwgTRPZL40Xgsd'; // Enter your webhook URL here
+      const payload = {
+        content: message
+      };
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        alert('Message sent to Discord!');
+      })
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+        alert('Failed to send message.');
+      });
+    }
+  
+    // Toggle display of report form
+    document.getElementById('report-link').addEventListener('click', function(event) {
+      event.preventDefault();
+      document.querySelector('.greeting-container').classList.add('hidden'); // Hide greeting message
+      document.getElementById('report-form').style.display = 'block';
+      document.getElementById('question-form').style.display = 'none';
+      document.getElementById('faq-content').style.display = 'none'; // Hide FAQ content
+    });
+  
+    // Toggle display of question form
+    document.getElementById('question-link').addEventListener('click', function(event) {
+      event.preventDefault();
+      document.querySelector('.greeting-container').classList.add('hidden'); // Hide greeting message
+      document.getElementById('question-form').style.display = 'block';
+      document.getElementById('report-form').style.display = 'none';
+      document.getElementById('faq-content').style.display = 'none'; // Hide FAQ content
+    });
+  
+    // Toggle display of FAQ content
+    document.getElementById('faq-link').addEventListener('click', function(event) {
+      event.preventDefault();
+      document.querySelector('.greeting-container').classList.add('hidden'); // Hide greeting message
+      document.getElementById('faq-content').style.display = 'block';
+      document.getElementById('report-form').style.display = 'none';
+      document.getElementById('question-form').style.display = 'none';
+    });
+  
+    // Submit handler for report form
+    document.getElementById('report-submit-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const reportName = document.getElementById('report-name').value;
+      const reportDetails = document.getElementById('report-details').value;
+      const message = `Report of misconduct\nName: ${reportName}\nDetails: ${reportDetails}`;
+      sendDiscordMessage(message);
+      // Clear form inputs
+      document.getElementById('report-name').value = '';
+      document.getElementById('report-details').value = '';
+    });
+  
+    // Submit handler for question form
+    document.getElementById('question-submit-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const questionName = document.getElementById('question-name').value;
+      const questionDetails = document.getElementById('question-details').value;
+      const message = `Question\nName: ${questionName}\nQuestion: ${questionDetails}`;
+      sendDiscordMessage(message);
+      // Clear form inputs
+      document.getElementById('question-name').value = '';
+      document.getElementById('question-details').value = '';
+    });
+  
+    // Variable to track F1 key state
+    let f1KeyPressed = false;
+  
+    // Handling F1 key press
+    document.addEventListener('keydown', (event) => {
+      if (event.key === '1') {
+        const header = document.querySelector('.header');
+        const footer = document.querySelector('.footer');
+        if (header.style.display === 'none') {
+          header.style.display = 'flex';
+          footer.style.display = 'block';
+        } else {
+          header.style.display = 'none';
+          footer.style.display = 'none';
+        }
+      }
+    });
+  </script>
+  
+</body>
+</html>
